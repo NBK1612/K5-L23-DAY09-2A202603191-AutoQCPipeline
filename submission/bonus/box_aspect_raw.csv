@@ -1,0 +1,13 @@
+check,severity,code,image,line,message,extra
+box_aspect,warn,BOX_ASPECT,img_0021,3,"box car cao-hẹp bất thường (tỉ lệ 2.72 > 2.5, 105x286px)","{""ratio"": 2.72, ""class"": ""car""}"
+box_aspect,warn,BOX_ASPECT,img_0024,7,"box car cao-hẹp bất thường (tỉ lệ 2.97 > 2.5, 26x78px)","{""ratio"": 2.97, ""class"": ""car""}"
+box_aspect,warn,BOX_ASPECT,img_0071,1,"box car cao-hẹp bất thường (tỉ lệ 2.97 > 2.5, 183x544px)","{""ratio"": 2.97, ""class"": ""car""}"
+box_aspect,warn,BOX_ASPECT,img_0073,2,"box truck cao-hẹp bất thường (tỉ lệ 2.56 > 2.5, 66x168px)","{""ratio"": 2.56, ""class"": ""truck""}"
+box_aspect,warn,BOX_ASPECT,img_0133,4,"box bus cao-hẹp bất thường (tỉ lệ 3.35 > 2.5, 43x145px)","{""ratio"": 3.35, ""class"": ""bus""}"
+box_aspect,warn,BOX_ASPECT,img_0148,1,"box person dẹt ngang bất thường (tỉ lệ 3.62 > 2.5, 209x58px)","{""ratio"": 3.62, ""class"": ""person""}"
+box_aspect,warn,BOX_ASPECT,img_0159,3,"box person dẹt ngang bất thường (tỉ lệ 2.51 > 2.5, 52x21px)","{""ratio"": 2.51, ""class"": ""person""}"
+box_aspect,warn,BOX_ASPECT,img_0159,4,"box person dẹt ngang bất thường (tỉ lệ 4.48 > 2.5, 74x16px)","{""ratio"": 4.48, ""class"": ""person""}"
+box_aspect,warn,BOX_ASPECT,img_0180,5,"box bus cao-hẹp bất thường (tỉ lệ 3.22 > 2.5, 41x132px)","{""ratio"": 3.22, ""class"": ""bus""}"
+box_aspect,warn,BOX_ASPECT,img_0183,6,"box car cao-hẹp bất thường (tỉ lệ 2.83 > 2.5, 37x104px)","{""ratio"": 2.83, ""class"": ""car""}"
+box_aspect,warn,BOX_ASPECT,img_0208,2,"box car cao-hẹp bất thường (tỉ lệ 2.92 > 2.5, 110x319px)","{""ratio"": 2.92, ""class"": ""car""}"
+box_aspect,warn,BOX_ASPECT,img_0212,3,"box car cao-hẹp bất thường (tỉ lệ 3.50 > 2.5, 82x288px)","{""ratio"": 3.5, ""class"": ""car""}"

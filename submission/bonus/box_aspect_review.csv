@@ -1,0 +1,13 @@
+image,line,label_class,human_verdict,actual,second_opinion_flag
+img_0021,3,car,sai,person,POSSIBLE_WRONG_CLASS
+img_0024,7,car,sai,biển báo,POSSIBLE_FALSE_POS
+img_0071,1,car,sai,person,POSSIBLE_WRONG_CLASS
+img_0073,2,truck,đúng,truck,không
+img_0133,4,bus,đúng,bus,không
+img_0148,1,person,đúng,person,không
+img_0159,3,person,đúng,person,POSSIBLE_MISSING (box khác)
+img_0159,4,person,đúng,person,POSSIBLE_MISSING (box khác)
+img_0180,5,bus,sai,mặt đường,POSSIBLE_FALSE_POS
+img_0183,6,car,sai,person,POSSIBLE_WRONG_CLASS
+img_0208,2,car,sai,person,POSSIBLE_WRONG_CLASS
+img_0212,3,car,sai,person,POSSIBLE_WRONG_CLASS
