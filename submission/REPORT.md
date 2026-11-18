@@ -61,7 +61,44 @@ Lấy từ `02_error_list_v1` (tính trên 224 ảnh ở cửa vào, 202 ảnh �
    - Ảnh này vẫn được duyệt (hạng 45 ≤ 80) chỉ nhờ dòng 4. Nếu chỉ có lỗi như dòng 2, ảnh sẽ không vào hàng đợi.
 
 ## 5. Train: raw vs clean (tùy chọn, chấm riêng)
-**Chưa chạy.** Phần lõi được hoàn thành trước; train trên Google Colab (T4) sẽ làm sau và cập nhật mục này.
+**Thiết lập:** Google Colab T4, `yolo26n.pt`, 20 epoch, imgsz 640, batch 16, seed 0 và 1. Hai biến thể dùng cùng val (`gold_val`, 40 ảnh) và cùng test (100 ảnh). Nguồn: `submission/results/comparison.md`, sinh bởi `summarize_results.py`.
+
+| biến thể | #ảnh train | số seed | mAP50 (TB ± độ lệch) | mAP50-95 | precision | recall |
+|---|---|---|---|---|---|---|
+| raw | 224 | 2 | 0.726 ± 0.000 | 0.512 ± 0.004 | 0.764 ± 0.061 | 0.649 ± 0.028 |
+| clean | 202 | 2 | 0.701 ± 0.025 | 0.487 ± 0.008 | 0.759 ± 0.003 | 0.625 ± 0.019 |
+
+AP50 theo lớp, trung bình 2 seed (raw → clean):
+
+| lớp | raw | clean |
+|---|---|---|
+| car | 0.74 | 0.74 |
+| person | 0.82 | 0.82 |
+| bus | 0.69 | 0.70 |
+| truck | 0.65 | **0.54** |
+
+**Kết luận trung thực: chưa kết luận được.**
+- Chênh mAP50 (clean − raw) = **−0.025**, đúng bằng độ lệch giữa 2 seed của clean (0.718 và 0.683 → ±0.025).
+- Với 2 seed và test 100 ảnh, chênh lệch này **nằm trong nhiễu**. Không nói được clean tốt hơn, cũng không nói được clean tệ hơn.
+- Phần chênh tập trung gần hết ở lớp **truck**, lớp có ít box nhất (41 box trong clean), và AP truck của clean dao động mạnh giữa 2 seed (0.59 và 0.49).
+
+**Giả thuyết và cách kiểm:**
+1. **Rò rỉ test làm phồng điểm raw.**
+   - `raw` train trên cả **5 ảnh trùng tập test** mà pipeline đã loại (`LEAK_TEST`: img_0049, 0101, 0167, 0174, 0221), thêm 12 ảnh trùng nhau.
+   - Model raw đã "thấy" 5/100 ảnh test.
+   - *Kiểm:* đánh giá lại cả hai model trên test **bỏ 5 ảnh** test_009, 033, 039, 044, 085. Nếu khoảng cách thu hẹp hoặc đảo chiều thì điểm raw đang bị thổi phồng.
+2. **Clean ít dữ liệu hơn, và nhãn vẫn chưa sạch hẳn.**
+   - Clean có ít hơn 22 ảnh (−10%).
+   - Clean vẫn còn **38 ảnh có cảnh báo chưa duyệt** (Hold), ví dụ img_0069 có cột đèn và biển báo gán `person`, img_0045 có người gán `car`.
+   - Người duyệt đã đổi lớp nhiều box: truck tăng từ 32 lên 41 box. Model 20 epoch có thể chưa học kịp nhãn mới.
+   - *Kiểm:* chạy thêm biến thể `oracle` (nhãn người, chặn trên) và ≥ 3 seed; xem AP truck có ổn định không.
+3. **Test nhỏ, lớp hiếm.** Test chỉ có 100 ảnh, truck/bus có ít ví dụ, nên mỗi box đúng hay sai làm AP lớp nhảy vài điểm.
+   - *Kiểm:* thêm seed, báo khoảng tin cậy (bootstrap trên ảnh test).
+
+**Việc tiếp theo:**
+- duyệt nốt 45 ảnh còn lại trong hàng đợi;
+- train lại với ≥ 3 seed và thêm biến thể `oracle`;
+- đánh giá trên test đã bỏ 5 ảnh rò rỉ.
 
 ## 6. Quyết định và ghi chú AI
 **(a) Quyết định: Hold.** Không phát hành `clean_v1`. Điều kiện để chuyển sang **Release**: số ảnh còn cảnh báo chưa duyệt phải < 10%, tức ≤ 20/202 ảnh.
